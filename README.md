@@ -375,7 +375,7 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 - Enable FIM on all sensitive directories
 - Monitor for new service creation and unauthorized software
 
-## Cryptology Concepts Applied — Encryption & Hashing
+## Cryptology Concepts Applied Encryption & Hashing
 
 > This section connects concepts from cryptology coursework to real observations made during this lab.
 
