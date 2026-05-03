@@ -380,7 +380,6 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 - [Wazuh Documentation](https://documentation.wazuh.com)
 - [Hydra GitHub](https://github.com/vanhauser-thc/thc-hydra)
 - [Microsoft Event ID 4625](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625)
-- [CIS Windows Server 2022 Benchmark](https://www.cisecurity.org/benchmark/microsoft_windows_server)
 - [MITRE ATT&CK](https://attack.mitre.org/)
 
 ---
