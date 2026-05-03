@@ -42,6 +42,37 @@ This project simulates a realistic SOC analyst workflow in a fully isolated Virt
 
 Network Topology
 
++-------------------------------------------------------+
+|          VirtualBox NAT Network: 10.0.2.0/24          |
+|                                                       |
+|         +------------------------------+              |
+|         |     Wazuh SIEM Manager       |              |
+|         |     Ubuntu 26.04 LTS         |              |
+|         |     10.0.2.15                |              |
+|         | Alerting | FIM | Vuln | CIS  |              |
+|         +-------------+----------------+              |
+|                       |                               |
+|                   Nat Network
+|                       |                               |
+|    +------------------+------------------+            |
+|    |                                     |            |
+|    v                                     |            |
+| +------------------+       +----------------------+  |
+| | HackerUbuntu     |       | Windows2022 (Victim) |  |
+| | Ubuntu 26.04 LTS |       | Windows Server 2022  |  |
+| | 10.0.2.6         |       | 10.0.2.5             |  |
+| | Hydra v9.6       |       | RDP :3389 (exposed)  |  |
+| | nmap             |       | Wazuh Agent          |  |
+| +------------------+       +----------------------+  |
+|    |                               ^                  |
+|    |---[Hydra RDP brute force]---->| :3389            |
+|    |---[nmap recon scan]---------->|                  |
+|                                                       |
++-------------------------------------------------------+
+
+Attack traffic:   ---> (Hydra RDP:3389, nmap)
+SIEM collected data:   Wazuh agent on the victim reports to the SIEM manager
+
 ### VM Specifications
 
 | Machine | OS | IP Address | Role |
