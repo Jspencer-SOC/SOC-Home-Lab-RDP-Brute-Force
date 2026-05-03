@@ -206,7 +206,7 @@ New-NetFirewallRule -DisplayName "Block HackerUbuntu" `
   -LocalPort 3389 -RemoteAddress 10.0.2.6 -Action Block
 ```
 
-![Firewall rule](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/firewall-rule.png.png)
+![Firewall rule](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/b4b5e58e1ed4e51c8554fa04f3436d89aed5cbe8/Screenshots/net-accounts-before-lockout.png)
 
 ### 3. Enable Lockout Auditing
 
