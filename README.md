@@ -299,6 +299,7 @@ Software installs trigger service creation and installer events — exactly what
 ### Nmap Scan Detected
 
 ![Nmap scan](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/nmap-scan-wazuh.png.png)
+![Nmap scan cmd](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/74a2286f8d6aeed25aba4ecc8f2f6d015f78a657/Screenshots/nmap-results.png.png)
 
 A subsequent nmap scan from HackerUbuntu was captured by Wazuh:
 
