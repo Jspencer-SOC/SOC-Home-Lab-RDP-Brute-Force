@@ -19,6 +19,7 @@
 - [Key Findings & IOCs](#key-findings--iocs)
 - [MITRE ATT&CK Mapping](#mitre-attck-mapping)
 - [Lessons Learned](#lessons-learned)
+- [Cryptology Concepts Applied](#-cryptology-concepts-applied--encryption--hashing)
 - [References](#references)
 
 ---
@@ -374,7 +375,121 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 - Enable FIM on all sensitive directories
 - Monitor for new service creation and unauthorized software
 
+## Cryptology Concepts Applied — Encryption & Hashing
+
+> This section connects concepts from cryptology coursework to real observations made during this lab.
+
 ---
+
+### NTLM Authentication & MD4 Hashing
+
+Every failed login attempt captured in Wazuh showed:
+```
+data.win.eventdata.authenticationPackage: NTLM
+data.win.eventdata.logonProcessName:      NtLmSsp
+```
+
+**NTLM (NT LAN Manager)** is Microsoft's legacy authentication protocol. When a user logs in, Windows does not transmit the plaintext password — instead it transmits a **hash** of the password computed using the **MD4 algorithm.**
+
+| Property | Value |
+|---|---|
+| Algorithm | MD4 |
+| Output size | 128-bit hash |
+| Status | **Cryptographically broken** |
+| Vulnerability | Collision attacks, rainbow table attacks, offline cracking |
+
+**MD4 was retired from cryptographic use** because it fails the core requirement of a secure hash function — it is computationally feasible to find two inputs that produce the same hash (a collision), and modern hardware can compute billions of MD4 hashes per second, making offline cracking extremely fast.
+
+---
+
+### How This Relates to the Brute Force Attack
+
+Hydra's RDP brute force works at the **authentication protocol level** — it sends plaintext password guesses over the network and lets the server compute and compare the hash. This means:
+
+1. Hydra submits a password guess → `password123`
+2. Windows computes the MD4 hash → `2b1b7b2fa1f1d8f6a3de142289c01f23`
+3. Windows compares it to the stored NTLM hash in the SAM database
+4. If they don't match → `subStatus: 0xc000006a` (wrong password)
+5. Hydra tries the next password in rockyou.txt
+
+**rockyou.txt is cryptographically significant** — it originated from a 2009 data breach in which 32 million user passwords were stored in **plaintext** (no hashing at all). This wordlist is effective because it represents real passwords people actually use, making it devastating against systems with weak or common passwords.
+
+---
+
+### Offline Hash Cracking (Post-Compromise Scenario)
+
+If the attacker had successfully logged in and dumped the Windows SAM (Security Account Manager) database, the attack would shift from **online brute forcing** to **offline hash cracking:**
+
+```bash
+# Example: Cracking an NTLM hash with hashcat
+hashcat -m 1000 -a 0 <ntlm_hash> /usr/share/wordlists/rockyou.txt
+```
+
+**Online vs Offline attack comparison:**
+
+| Property | Online (Hydra RDP) | Offline (hashcat) |
+|---|---|---|
+| Speed | ~26 attempts/min (rate limited by RDP) | Billions of hashes/second |
+| Detectability | High — generates 4625 events in SIEM | Zero — no network traffic |
+| Lockout risk | Yes — account lockout applies | No — no auth attempts made |
+| Requirement | Live network access | Access to hash dump only |
+
+This is why **password hashing algorithm strength matters enormously** — a weak algorithm like MD4 means that even if an attacker only gets the hash (not the plaintext), they can crack it offline with no detection.
+
+---
+
+### Cryptographic Fixes — Stronger Authentication
+
+**1. Replace NTLM with Kerberos**
+
+Kerberos uses **AES-256 encryption** for ticket-based authentication — significantly more resistant to offline cracking than NTLM's MD4 hashing. In a domain environment, Kerberos should always be preferred over NTLM.
+
+**2. Enable NLA (Network Level Authentication)**
+
+NLA adds **TLS encryption** before the RDP session is established:
+```powershell
+# Enable NLA on Windows Server
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' `
+  -Name "UserAuthentication" -Value 1
+```
+
+Without NLA, credential negotiation happens inside an unencrypted RDP session. With NLA, credentials are protected by TLS before any session data is exchanged.
+
+**3. Certificate-Based Authentication**
+
+Replaces password authentication entirely with **asymmetric cryptography:**
+- Server holds a **public key**
+- User holds a **private key** (stored on a smart card or TPM)
+- Authentication proves possession of the private key without transmitting it
+- An attacker with no private key cannot authenticate regardless of how many guesses they attempt — **brute force becomes mathematically impossible**
+
+**4. Strong Password Hashing (for stored credentials)**
+
+If passwords must be stored, use modern algorithms:
+
+| Algorithm | Type | Recommended |
+|---|---|---|
+| MD4 (NTLM) | Fast hash | ❌ Broken |
+| MD5 | Fast hash | ❌ Broken |
+| SHA-1 | Fast hash | ❌ Deprecated |
+| bcrypt | Slow hash | ✅ Recommended |
+| Argon2 | Memory-hard | ✅ Best practice |
+
+**Slow hashing algorithms** (bcrypt, Argon2) are specifically designed to be computationally expensive — even if an attacker obtains a hash, cracking it takes months instead of seconds.
+
+---
+
+### Summary — Cryptology Lessons from This Lab
+
+| Observation | Cryptology Concept |
+|---|---|
+| NTLM used in every auth attempt | Hashing algorithms underpin authentication |
+| MD4 is broken and fast to crack | Hash function security requirements |
+| rockyou.txt derived from plaintext breach | Importance of hashing passwords at rest |
+| Offline cracking far faster than online | Online vs offline attack surface |
+| NLA recommendation | Encryption in transit (TLS) |
+| Certificate auth recommendation | Asymmetric cryptography / PKI |
+| Kerberos recommendation | Modern authenticated key exchange |
 
 ## References
 
@@ -386,3 +501,4 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 ---
 
 *Lab conducted April 27 – May 2, 2026. All activity performed on systems I own, in an isolated VirtualBox environment, for educational purposes only.*
+*Lab guidance and write-up assistance provided with the help of Claude AI (Anthropic).*
