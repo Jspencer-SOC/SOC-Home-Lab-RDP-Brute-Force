@@ -18,7 +18,7 @@
 - [Threat Hunting](#threat-hunting)
 - [Key Findings & IOCs](#key-findings--iocs)
 - [MITRE ATT&CK Mapping](#mitre-attck-mapping)
-- [Cryptology Concepts Applied](#-cryptology-concepts-applied--encryption--hashing)
+- [Cryptology Concepts Applied](#cryptology-concepts-applied-encryption-hashing)
 - [Lessons Learned](#lessons-learned)
 - [References](#references)
 
