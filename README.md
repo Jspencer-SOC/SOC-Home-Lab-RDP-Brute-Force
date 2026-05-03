@@ -18,8 +18,8 @@
 - [Threat Hunting](#threat-hunting)
 - [Key Findings & IOCs](#key-findings--iocs)
 - [MITRE ATT&CK Mapping](#mitre-attck-mapping)
-- [Lessons Learned](#lessons-learned)
 - [Cryptology Concepts Applied](#-cryptology-concepts-applied--encryption--hashing)
+- [Lessons Learned](#lessons-learned)
 - [References](#references)
 
 ---
@@ -346,35 +346,6 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 
 ---
 
-## Lessons Learned
-
-### Vulnerabilities Found
-1. RDP exposed with no IP restrictions; anyone can connect via the internet
-2. No account lockout policy configured
-3. Built-in Administrator account exposed over RDP
-4. CIS Benchmark score of only 26%
-5. 1,190 high-severity unpatched CVEs
-6. Account lockout auditing is disabled by default
-7. Built-in Administrator is exempt from lockout without GPO override
-
-### What Worked
-1. Wazuh detected every attempt in real time
-2. Full attacker attribution in every log entry
-3. Live remediation stopped the attack within minutes
-4. FIM detected file creation immediately
-5. Threat hunting revealed nmap reconnaissance and software installs
-
-### Real-World Recommendations
-- Disable RDP entirely if not needed; use VPN + jump box
-- Restrict RDP to specific IPs via firewall
-- Rename or disable the built-in Administrator account
-- Enforce MFA for all remote access
-- Apply all Critical/High patches immediately
-- Target CIS Benchmark score above 80%
-- Configure Wazuh Active Response for auto IP-blocking
-- Enable FIM on all sensitive directories
-- Monitor for new service creation and unauthorized software
-
 ## Cryptology Concepts Applied Encryption & Hashing
 
 > This section connects concepts from cryptology coursework to real observations made during this lab.
@@ -491,6 +462,38 @@ If passwords must be stored, use modern algorithms:
 | NLA recommendation | Encryption in transit (TLS) |
 | Certificate auth recommendation | Asymmetric cryptography / PKI |
 | Kerberos recommendation | Modern authenticated key exchange |
+
+---
+
+## Lessons Learned
+
+### Vulnerabilities Found
+1. RDP exposed with no IP restrictions; anyone can connect via the internet
+2. No account lockout policy configured
+3. Built-in Administrator account exposed over RDP
+4. CIS Benchmark score of only 26%
+5. 1,190 high-severity unpatched CVEs
+6. Account lockout auditing is disabled by default
+7. Built-in Administrator is exempt from lockout without GPO override
+
+### What Worked
+1. Wazuh detected every attempt in real time
+2. Full attacker attribution in every log entry
+3. Live remediation stopped the attack within minutes
+4. FIM detected file creation immediately
+5. Threat hunting revealed nmap reconnaissance and software installs
+
+### Real-World Recommendations
+- Disable RDP entirely if not needed; use VPN + jump box
+- Restrict RDP to specific IPs via firewall
+- Rename or disable the built-in Administrator account
+- Enforce MFA for all remote access
+- Apply all Critical/High patches immediately
+- Target CIS Benchmark score above 80%
+- Configure Wazuh Active Response for auto IP-blocking
+- Enable FIM on all sensitive directories
+- Monitor for new service creation and unauthorized software
+
 
 ## References
 
