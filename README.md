@@ -40,36 +40,7 @@ This project simulates a realistic SOC analyst workflow in a fully isolated Virt
 
 ## Environment & Network Topology
 
-+-------------------------------------------------------+
-|          VirtualBox NAT Network: 10.0.2.0/24          |
-|                                                       |
-|         +------------------------------+              |
-|         |     Wazuh SIEM Manager       |              |
-|         |     Ubuntu 26.04 LTS         |              |
-|         |     10.0.2.15                |              |
-|         | Alerting | FIM | Vuln | CIS  |              |
-|         +-------------+----------------+              |
-|                       |                               |
-|              Wazuh agent telemetry                    |
-|                       |                               |
-|    +------------------+------------------+            |
-|    |                                     |            |
-|    v                                     |            |
-| +------------------+       +----------------------+  |
-| | HackerUbuntu     |       | Windows2022 (Victim) |  |
-| | Ubuntu 26.04 LTS |       | Windows Server 2022  |  |
-| | 10.0.2.6         |       | 10.0.2.5             |  |
-| | Hydra v9.6       |       | RDP :3389 (exposed)  |  |
-| | nmap             |       | Wazuh Agent          |  |
-| +------------------+       +----------------------+  |
-|    |                               ^                  |
-|    |---[Hydra RDP brute force]---->| :3389            |
-|    |---[nmap recon scan]---------->|                  |
-|                                                       |
-+-------------------------------------------------------+
-
-Attack traffic:   ---> (Hydra RDP :3389, nmap)
-SIEM telemetry:   Wazuh agent on victim reports to SIEM manager
+![Network Topology](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/ossec-conf-fim.png.png))
 
 ### VM Specifications
 
