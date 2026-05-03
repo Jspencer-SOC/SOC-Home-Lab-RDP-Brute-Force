@@ -39,7 +39,7 @@ This project simulates a realistic SOC analyst workflow in a fully isolated Virt
 
 ## Environment & Network Topology
 
-[Network Topology]
+Network Topology
 
 ### VM Specifications
 
@@ -72,13 +72,13 @@ This project simulates a realistic SOC analyst workflow in a fully isolated Virt
 
 The Wazuh agent on the Windows victim was configured to monitor Security Event Logs and system directories:
 
-![ossec.conf base](screenshots/ossec-conf-base.png)
+![ossec.conf base](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/ossec-conf-base.png.png)
 
 ### Wazuh Agent — FIM Custom Directory
 
 A custom real-time monitored directory was added:
 
-![ossec.conf FIM](screenshots/ossec-conf-fim.png)
+![ossec.conf FIM](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/ossec-conf-fim.png.png))
 
 ```xml
 <directories realtime="yes">C:\Users\Administrator\Hackers</directories>
@@ -88,7 +88,7 @@ A custom real-time monitored directory was added:
 
 Apps installed via winget to generate realistic Wazuh telemetry:
 
-![winget install](screenshots/winget-install.png)
+![winget install](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/winget-install.png.png)
 
 ```powershell
 winget install --id=Notepad++.Notepad++ -e
@@ -127,9 +127,9 @@ hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://10.0.2.5 -t 1
 
 ### Wazuh Live Alert View
 
-![Wazuh alerts](screenshots/wazuh-alerts-live.png)
+![Wazuh alerts](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-alerts-3712hits.png.png)
 
-**3,713 events** captured. Every attempt is fully attributed to the attacker.
+**3,712 events** captured. Every attempt is fully attributed to the attacker.
 
 ### Key Windows Event IDs
 
@@ -163,13 +163,13 @@ data.win.eventdata.processId:            0x0            ← No process spawned
 
 ### SubStatus Timeline
 
-![SubStatus timeline](screenshots/wazuh-substatus-timeline.png)
+![SubStatus timeline](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-substatus-timeline.png.png)
 
 Dense column of `0xc000006a` codes — stops abruptly after remediation.
 
 ### EventID View
 
-![EventID view](screenshots/wazuh-eventid-view.png)
+![EventID view](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-eventid-view.png.png)
 
 ### Attack Timeline
 
@@ -194,7 +194,7 @@ net accounts /lockoutthreshold:5 /lockoutduration:30 /lockoutwindow:15
 gpupdate /force
 ```
 
-![Account locked](screenshots/account-locked.png)
+![Account locked](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/account-locked.png.png)
 
 > **Key finding:** Built-in Administrator is exempt from lockout by default on Windows Server. A `secedit` GPO override + `gpupdate /force` was required to enforce it — an important real-world hardening caveat.
 
@@ -206,7 +206,7 @@ New-NetFirewallRule -DisplayName "Block HackerUbuntu" `
   -LocalPort 3389 -RemoteAddress 10.0.2.6 -Action Block
 ```
 
-![Firewall rule](screenshots/firewall-rule.png)
+![Firewall rule](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/firewall-rule.png.png)
 
 ### 3. Enable Lockout Auditing
 
@@ -220,7 +220,7 @@ auditpol /set /subcategory:"Account Lockout" /success:enable /failure:enable
 
 A test file `test-02.txt` was created inside `C:\Users\Administrator\Hackers\`:
 
-![FIM test file](screenshots/fim-test-file.png)
+![FIM test file](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/fim-test-file.png.png)
 
 Wazuh generated an alert for the file creation event. In a real scenario, this would detect:
 - Attacker dropping a payload post-compromise
@@ -233,7 +233,7 @@ Wazuh generated an alert for the file creation event. In a real scenario, this w
 
 ### Windows Server 2022 (Victim)
 
-![Vuln detection Windows](screenshots/vuln-detection-windows.png)
+![Vuln detection Windows](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/vuln-detection-windows.png.png)
 
 | Severity | Count |
 |---|---|
@@ -247,7 +247,7 @@ Top CVEs: CVE-2020-16009, CVE-2021-21118 through CVE-2021-21121
 
 ### HackerUbuntu (Attacker)
 
-![Vuln detection attacker](screenshots/vuln-detection-attacker.png)
+![Vuln detection attacker](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/vuln-detection-attacker.png.png)
 
 | Severity | Count |
 |---|---|
@@ -261,7 +261,7 @@ Top CVEs: CVE-2020-16009, CVE-2021-21118 through CVE-2021-21121
 
 ## CIS Benchmark Assessment
 
-![CIS benchmark](screenshots/cis-benchmark.png)
+![CIS benchmark](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/cis-benchmark.png.png)
 
 **CIS Microsoft Windows Server 2022 Benchmark v2.0.0**
 
@@ -282,8 +282,8 @@ A 26% CIS score means the system is severely under-hardened with a large attack 
 
 ### Wazuh Threat Hunting — Application & Service Activity
 
-![Threat hunting 1](screenshots/threat-hunting-1.png)
-![Threat hunting 2](screenshots/threat-hunting-2.png)
+![Threat hunting 1](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/threat-hunting-1.png.png)
+![Threat hunting 2](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/threat-hunting-2.png.png)
 
 | Rule ID | Description | Level |
 |---|---|---|
@@ -298,7 +298,7 @@ Software installs trigger service creation and installer events — exactly what
 
 ### Nmap Scan Detected
 
-![Nmap scan](screenshots/nmap-scan-wazuh.png)
+![Nmap scan](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/nmap-scan-wazuh.png.png)
 
 A subsequent nmap scan from HackerUbuntu was captured by Wazuh:
 
@@ -337,10 +337,10 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 |---|---|---|
 | Initial Access | Brute Force: Password Guessing | T1110.001 |
 | Credential Access | Brute Force | T1110 |
-| Discovery | Network Service Scanning | T1046 |
-| Defense Evasion | Valid Accounts | T1078 |
-| Privilege Escalation | Sudo and Sudo Caching | T1548.003 |
-| Persistence | New Service Created | T1543.003 |
+| Discovery | Network Service Discovery | T1046 |
+| Initial Access | Valid Accounts | T1078 |
+| Privilege Escalation | Abuse Elevation Control Mechanism: Sudo and Sudo Caching | T1548.003 |
+| Persistence | Create or Modify System Process: Windows Service | T1543.003 |
 
 ---
 
@@ -381,8 +381,7 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 - [Hydra GitHub](https://github.com/vanhauser-thc/thc-hydra)
 - [Microsoft Event ID 4625](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625)
 - [CIS Windows Server 2022 Benchmark](https://www.cisecurity.org/benchmark/microsoft_windows_server)
-- [MITRE ATT&CK T1110.001](https://attack.mitre.org/techniques/T1110/001/)
-- [MITRE ATT&CK T1046](https://attack.mitre.org/techniques/T1046/)
+- [MITRE ATT&CK](https://attack.mitre.org/)
 
 ---
 
