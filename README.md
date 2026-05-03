@@ -395,7 +395,7 @@ data.win.eventdata.logonProcessName:      NtLmSsp
 |---|---|
 | Algorithm | MD4 |
 | Output size | 128-bit hash |
-| Status | **Cryptographically broken** |
+| Status | Cryptographically broken |
 | Vulnerability | Collision attacks, rainbow table attacks, offline cracking |
 
 **MD4 was retired from cryptographic use** because it fails the core requirement of a secure hash function — it is computationally feasible to find two inputs that produce the same hash (a collision), and modern hardware can compute billions of MD4 hashes per second, making offline cracking extremely fast.
@@ -461,7 +461,7 @@ Replaces password authentication entirely with **asymmetric cryptography:**
 - Server holds a **public key**
 - User holds a **private key** (stored on a smart card or TPM)
 - Authentication proves possession of the private key without transmitting it
-- An attacker with no private key cannot authenticate regardless of how many guesses they attempt — **brute force becomes mathematically impossible**
+- An attacker with no private key cannot authenticate, regardless of how many guesses they attempt — **brute force becomes mathematically impossible**
 
 **4. Strong Password Hashing (for stored credentials)**
 
@@ -469,11 +469,11 @@ If passwords must be stored, use modern algorithms:
 
 | Algorithm | Type | Recommended |
 |---|---|---|
-| MD4 (NTLM) | Fast hash | ❌ Broken |
-| MD5 | Fast hash | ❌ Broken |
-| SHA-1 | Fast hash | ❌ Deprecated |
-| bcrypt | Slow hash | ✅ Recommended |
-| Argon2 | Memory-hard | ✅ Best practice |
+| MD4 (NTLM) | Fast hash | Broken |
+| MD5 | Fast hash | Broken |
+| SHA-1 | Fast hash | No longer in use |
+| bcrypt | Slow hash | Recommended |
+| Argon2 | Memory-hard | Best practice |
 
 **Slow hashing algorithms** (bcrypt, Argon2) are specifically designed to be computationally expensive — even if an attacker obtains a hash, cracking it takes months instead of seconds.
 
@@ -497,6 +497,13 @@ If passwords must be stored, use modern algorithms:
 - [Hydra GitHub](https://github.com/vanhauser-thc/thc-hydra)
 - [Microsoft Event ID 4625](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625)
 - [MITRE ATT&CK](https://attack.mitre.org/)
+- [Microsoft NTLM Authentication Documentation](https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm)
+- [NIST on MD4/MD5 Deprecation](https://csrc.nist.gov/projects/hash-functions)
+- [The RockYou Data Breach — Background](https://techcrunch.com/2009/12/14/rockyou-hack-security-myspace-facebook-passwords/)
+- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+- [Microsoft — NLA for RDP](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-allow-access)
+- [NIST Guidelines on Password Hashing — SP 800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)
+- [Hashcat Documentation](https://hashcat.net/wiki/)
 
 ---
 
