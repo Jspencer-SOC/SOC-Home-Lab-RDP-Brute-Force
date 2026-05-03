@@ -457,7 +457,7 @@ If passwords must be stored, use modern algorithms:
 |---|---|
 | NTLM used in every auth attempt | Hashing algorithms underpin authentication |
 | MD4 is broken and fast to crack | Hash function security requirements |
-| rockyou.txt derived from plaintext breach | Importance of hashing passwords at rest |
+| rockyou.txt derived from plaintext breach | Importance of hashing passwords |
 | Offline cracking far faster than online | Online vs offline attack surface |
 | NLA recommendation | Encryption in transit (TLS) |
 | Certificate auth recommendation | Asymmetric cryptography / PKI |
