@@ -388,7 +388,7 @@ Every failed login attempt captured in Wazuh showed:
 data.win.eventdata.authenticationPackage: NTLM
 data.win.eventdata.logonProcessName:      NtLmSsp
 ```
-![Failed Logs](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/74a2286f8d6aeed25aba4ecc8f2f6d015f78a657/Screenshots/nmap-results.png.png)
+![Failed Logs](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/2ec3007bb3f25e3832eb4bdc7784e4e16c81e77c/Screenshots/NTLM%20%26%20NtLMSsp%20documentation.png)
 
 **NTLM (NT LAN Manager)** is Microsoft's legacy authentication protocol. When a user logs in, Windows does not transmit the plaintext password — instead, it transmits a **hash** of the password computed using the **MD4 algorithm.**
 
