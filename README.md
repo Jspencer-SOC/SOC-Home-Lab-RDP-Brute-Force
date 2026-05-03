@@ -40,8 +40,6 @@ This project simulates a realistic SOC analyst workflow in a fully isolated Virt
 
 ## Environment & Network Topology
 
-Network Topology
-
 +-------------------------------------------------------+
 |          VirtualBox NAT Network: 10.0.2.0/24          |
 |                                                       |
@@ -52,7 +50,7 @@ Network Topology
 |         | Alerting | FIM | Vuln | CIS  |              |
 |         +-------------+----------------+              |
 |                       |                               |
-|                   Nat Network
+|              Wazuh agent telemetry                    |
 |                       |                               |
 |    +------------------+------------------+            |
 |    |                                     |            |
@@ -70,8 +68,8 @@ Network Topology
 |                                                       |
 +-------------------------------------------------------+
 
-Attack traffic:   ---> (Hydra RDP:3389, nmap)
-SIEM collected data:   Wazuh agent on the victim reports to the SIEM manager
+Attack traffic:   ---> (Hydra RDP :3389, nmap)
+SIEM telemetry:   Wazuh agent on victim reports to SIEM manager
 
 ### VM Specifications
 
