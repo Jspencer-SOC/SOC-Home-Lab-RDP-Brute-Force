@@ -172,6 +172,7 @@ hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://10.0.2.5 -t 1
 
 ![Wazuh alerts](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-alerts-3712hits.png.png)
 ![EventID view](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-eventid-view.png.png)
+![Wazuh rule](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/3a5678477f33cac70497273cb2a9d212b82e446c/Screenshots/VirtualBox_Ubuntu-26.04_04_05_2026_02_08_29.png)
 
 **3,712 events** captured. Every attempt is fully attributed to the attacker.
 
