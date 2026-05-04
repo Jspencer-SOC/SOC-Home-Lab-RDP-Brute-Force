@@ -171,6 +171,7 @@ hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://10.0.2.5 -t 1
 ### Wazuh Live Alert View
 
 ![Wazuh alerts](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-alerts-3712hits.png.png)
+![EventID view](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-eventid-view.png.png)
 
 **3,712 events** captured. Every attempt is fully attributed to the attacker.
 
@@ -209,22 +210,6 @@ data.win.eventdata.processId:            0x0            ← No process spawned
 ![SubStatus timeline](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-substatus-timeline.png.png)
 
 Dense column of `0xc000006a` codes — stops abruptly after remediation.
-
-### EventID View
-
-![EventID view](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/wazuh-eventid-view.png.png)
-
-### Attack Timeline
-
-| Time | Event |
-|---|---|
-| 20:57 | Hydra attack starts |
-| 20:57–21:10 | Sustained 4625 wave at ~26/min |
-| 21:10 | Lockout policy applied live |
-| 21:14 | Last auth attempt in Wazuh |
-| 21:22 | Hydra exits — `all children disabled` |
-
----
 
 ## Remediation Phase
 
