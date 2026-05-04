@@ -114,6 +114,14 @@ Wazuh generated an alert for the file creation event. In a real scenario, this w
 - Malware writing files to sensitive directories
 - Unauthorized changes to config files
 
+| Rule ID | Description | Level |
+|---|---|---|
+| 60612 | Application installed win.eventdata.data | 3 |
+| 550 | Integrity checksum changed | 7 |
+| 554 | File added to the monitored system| 5 |
+
+*As a general rule: do not dismiss any alert above level 3 
+
 ---
 
 ## Threat Hunting
