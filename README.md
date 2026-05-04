@@ -80,6 +80,7 @@ The Wazuh agent on the Windows victim was configured to monitor Security Event L
 A custom real-time monitored directory was added:
 
 ![ossec.conf FIM](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/ossec-conf-fim.png.png))
+![Integrity checksum](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/f2c200fb43f3b7018810b28f81c8ae2efa084592/Screenshots/Integrity%20checksum%20changed.png)
 
 ```xml
 <directories realtime="yes">C:\Users\Administrator\Hackers</directories>
@@ -90,6 +91,7 @@ A custom real-time monitored directory was added:
 Apps installed via winget to generate realistic Wazuh telemetry:
 
 ![winget install](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/winget-install.png.png)
+![Application Install ID](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/f2c200fb43f3b7018810b28f81c8ae2efa084592/Screenshots/Application%20Installed%20on%20Windows%20VM.png)
 
 ```powershell
 winget install --id=Notepad++.Notepad++ -e
@@ -222,6 +224,7 @@ auditpol /set /subcategory:"Account Lockout" /success:enable /failure:enable
 A test file `test-02.txt` was created inside `C:\Users\Administrator\Hackers\`:
 
 ![FIM test file](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/fim-test-file.png.png)
+![File added](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/f2c200fb43f3b7018810b28f81c8ae2efa084592/Screenshots/File%20added%20to%20the%20monitored%20system.png)
 
 Wazuh generated an alert for the file creation event. In a real scenario, this would detect:
 - Attacker dropping a payload post-compromise
