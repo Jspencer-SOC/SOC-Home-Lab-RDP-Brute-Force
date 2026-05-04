@@ -9,13 +9,13 @@
 - [Environment & Network Topology](#environment--network-topology)
 - [Tools Used](#tools-used)
 - [Lab Setup](#lab-setup)
+- [File Integrity Monitoring](#file-integrity-monitoring-fim)
+- [Threat Hunting](#threat-hunting)
 - [Attack Phase](#attack-phase--rdp-brute-force)
 - [Detection Phase](#detection-phase)
 - [Remediation Phase](#remediation-phase)
-- [File Integrity Monitoring](#file-integrity-monitoring-fim)
 - [Vulnerability Detection](#vulnerability-detection)
 - [CIS Benchmark Assessment](#cis-benchmark-assessment)
-- [Threat Hunting](#threat-hunting)
 - [Key Findings & IOCs](#key-findings--iocs)
 - [MITRE ATT&CK Mapping](#mitre-attck-mapping)
 - [Cryptology Concepts Applied](#cryptology-concepts-applied-encryption--hashing)
@@ -102,6 +102,38 @@ winget install --id=Dropbox.Dropbox -e
 
 ---
 
+## File Integrity Monitoring (FIM)
+
+A test file `test-02.txt` was created inside `C:\Users\Administrator\Hackers\`:
+
+![FIM test file](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/fim-test-file.png.png)
+![File added](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/f2c200fb43f3b7018810b28f81c8ae2efa084592/Screenshots/File%20added%20to%20the%20monitored%20system.png)
+
+Wazuh generated an alert for the file creation event. In a real scenario, this would detect:
+- Attacker dropping a payload post-compromise
+- Malware writing files to sensitive directories
+- Unauthorized changes to config files
+
+---
+
+## Threat Hunting
+
+### Wazuh Threat Hunting — Application & Service Activity
+
+![Threat hunting 1](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/threat-hunting-1.png.png)
+![Threat hunting 2](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/threat-hunting-2.png.png)
+
+| Rule ID | Description | Level |
+|---|---|---|
+| 60610 | Windows installer began installation | 3 |
+| 61138 | New Windows Service Created | 5 |
+| 61104 | Service startup type changed | 3 |
+| 60132 | System time changed | 5 |
+| 60122 | Logon Failure / bad password | 5 |
+| 60612 | Application installed (Chrome, Teams, Dropbox) | 3 |
+
+Software installs trigger service creation and installer events — exactly what malware installation looks like.
+---
 ## Attack Phase — RDP Brute Force
 
 ### Attacker Command
@@ -219,20 +251,6 @@ auditpol /set /subcategory:"Account Lockout" /success:enable /failure:enable
 
 ---
 
-## File Integrity Monitoring (FIM)
-
-A test file `test-02.txt` was created inside `C:\Users\Administrator\Hackers\`:
-
-![FIM test file](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/fim-test-file.png.png)
-![File added](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/f2c200fb43f3b7018810b28f81c8ae2efa084592/Screenshots/File%20added%20to%20the%20monitored%20system.png)
-
-Wazuh generated an alert for the file creation event. In a real scenario, this would detect:
-- Attacker dropping a payload post-compromise
-- Malware writing files to sensitive directories
-- Unauthorized changes to config files
-
----
-
 ## Vulnerability Detection
 
 ### Windows Server 2022 (Victim)
@@ -282,24 +300,6 @@ A 26% CIS score means the system is severely under-hardened with a large attack 
 
 ---
 
-## Threat Hunting
-
-### Wazuh Threat Hunting — Application & Service Activity
-
-![Threat hunting 1](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/threat-hunting-1.png.png)
-![Threat hunting 2](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/threat-hunting-2.png.png)
-
-| Rule ID | Description | Level |
-|---|---|---|
-| 60610 | Windows installer began installation | 3 |
-| 61138 | New Windows Service Created | 5 |
-| 61104 | Service startup type changed | 3 |
-| 60132 | System time changed | 5 |
-| 60122 | Logon Failure / bad password | 5 |
-| 60612 | Application installed (Chrome, Teams, Dropbox) | 3 |
-
-Software installs trigger service creation and installer events — exactly what malware installation looks like.
-
 ### Nmap Scan Detected
 
 ![Nmap scan](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/796b65dc96977efc4021cb9ad486950943336674/Screenshots/nmap-scan-wazuh.png.png)
@@ -320,7 +320,7 @@ This shows Wazuh detecting **reconnaissance activity**, not just auth failures.
 
 ## Key Findings & IOCs
 
-| IOC Type | Value |
+| Indicators of Compromise Type | Value |
 |---|---|
 | Attacker IP | `10.0.2.6` |
 | Attacker Hostname | `HackerUbuntu` |
