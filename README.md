@@ -403,7 +403,7 @@ hashcat -m 1000 -a 0 <ntlm_hash> /usr/share/wordlists/rockyou.txt
 | Lockout risk | Yes — account lockout applies | No — no auth attempts made |
 | Requirement | Live network access | Access to hash dump only |
 
-This is why **password hashing algorithm strength matters enormously** — a weak algorithm like MD4 means that even if an attacker only gets the hash (not the plaintext), they can crack it offline with no detection.
+This is why **password hashing algorithm strength matters** — a weak algorithm like MD4 means that even if an attacker only gets the hash (not the plaintext), they can crack it offline with no detection.
 
 ---
 
