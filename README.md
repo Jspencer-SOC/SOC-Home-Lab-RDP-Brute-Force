@@ -40,7 +40,7 @@ This project simulates a realistic SOC analyst workflow in a fully isolated Virt
 
 ## Environment & Network Topology
 
-![Network Topology](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/8da2f44d5ebab0eef4c84b9868d8ccb7615182d8/Screenshots/Environment%20%26%20Network%20Topology.pdf)
+![Network Topology](https://github.com/Jspencer-SOC/SOC-Home-Lab-RDP-Brute-Force/blob/7b64cb4932b6a04e8796318ae2b7c51d5f50fba5/Screenshots/Environment%20%20Network%20Topology-1.png)
 
 ### VM Specifications
 
